@@ -1,6 +1,6 @@
 library(ggplot2)
 
-setwd('/Users/rickdale/Dropbox/new.projects/multiModal/Dale and Bhat/')
+setwd('/Users/rickdale/Dropbox/new.projects/multiModal/Dale and Bhat/R_code/')
 
 eye.names = read.csv('tolston_data/Tolston_et_al_2014_JEPHPP/EYE_DATA_FORMAT.csv')
 head.names = read.csv('tolston_data/Tolston_et_al_2014_JEPHPP/HEAD_DATA_FORMAT.csv')
