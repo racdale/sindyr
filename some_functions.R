@@ -2,27 +2,34 @@
 # coded by Rick Dale and Harish Bhat
 #
 
-sindylicious = function(xs,dx,Theta,lambda=.05) {
-  Xi = mldivide(Theta,dx)
+sindylicious = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05) {
+  if (is.null(dx)) {
+    dx = xs*0
+    for (i in 1:ncol(xs)) {
+      dx[,i] = finDiff(xs[,i],dt)
+    }
+    dx = as.matrix(dx)
+  }
+  if (is.null(Theta)) {
+    Theta = features(xs,3)
+  }
+  B = mldivide(Theta,dx)
   if (lambda>0) {
-    XiB = Xi
     for (k in 1:10) {
-      posinds = which(abs(Xi)<lambda);  
-      Xi[posinds]=0;
-      XiC = Xi
+      zero_inds = which(abs(B)<lambda);  
+      B[zero_inds]=0;
       for (ind in 1:ncol(dx)) {
-        Xitemp = Xi[,ind]
-        posinds = which(abs(Xitemp)>=lambda)
-        if (length(posinds)>0) {
-          Xi[posinds,ind] = mldivide(Theta[,posinds],dx[,ind])
+        B_temp = B[,ind]
+        pos_inds = which(abs(B_temp)>=lambda)
+        if (length(pos_inds)>0) {
+          B[pos_inds,ind] = mldivide(Theta[,pos_inds],dx[,ind])
         }
       }
-      XiD = Xi
     }
   }
-  rownames(Xi) = colnames(Theta)
-  colnames(Xi) = colnames(xs)
-  return(Xi)
+  rownames(B) = colnames(Theta)
+  colnames(B) = colnames(xs)
+  return(B)
 }
 
 features = function(x,polyorder=2) {
