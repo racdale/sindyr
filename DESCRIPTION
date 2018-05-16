@@ -1,0 +1,19 @@
+Package: crqanlp
+Type: Package
+Title: Cross-Recurrence Quantification Analysis for 
+           Dynamic Natural Language Processing
+Version: 0.3
+Date: 2018-03-19
+Author: Rick Dale and Moreno Coco
+Maintainer: Rick Dale <racdale@gmail.com>
+Description: 
+    Cross-recurrence quantification analysis 
+    for word series, from text, known as categorical
+    recurrence analysis. Uses the 'crqa' R package
+    by Coco and Dale (2014) <doi:10.3389/fpsyg.2014.00510>. 
+    Functions are wrappers to facilitate exploration 
+    of the sequential properties of text.
+Depends: R (>= 3.0.0), crqa, tm, corpus, gutenbergr, RCurl
+License: GPL (>= 2)
+NeedsCompilation: no
+RoxygenNote: 6.0.1

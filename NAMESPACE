@@ -1,0 +1,14 @@
+export(assign_codes, 
+       clean_text, 
+       get_text_series, 
+       plot_rp, 
+       text_rqa, 
+       text_win_rqa)
+
+import(crqa, 
+       tm, 
+       corpus, 
+       gutenbergr, 
+       RCurl)
+
+importFrom("graphics", "plot")
