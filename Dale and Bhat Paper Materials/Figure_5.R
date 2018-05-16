@@ -1,12 +1,14 @@
 #########################################################################
 #
-# coded by Rick Dale and Harish Bhat
+# coded by Rick Dale 
 # Adapted from the MATLAB code of Brunton et al. (2016), PNAS
 #
 #########################################################################
+
 setwd('~/Dropbox/new.projects/multiModal/Dale and Bhat/')
 source('R_code/some_functions.R')
 library(pracma)
+library(sindyr)
 
 ########################################################################
 #
@@ -52,5 +54,6 @@ for (i in 1:100) {
 }
 dev.off()
 
-B = sindylicious(xs=deets[1:(nrow(deets)-1),1:2],dx=as.matrix(deets[2:nrow(deets),1:2]),lambda=.6,dt=1);B 
+B = sindyr::sindy(xs=deets[1:(nrow(deets)-1),1:2],dx=as.matrix(deets[2:nrow(deets),1:2]),lambda=.6,dt=1);
+B 
 

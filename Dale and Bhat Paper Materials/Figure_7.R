@@ -6,6 +6,7 @@
 #########################################################################
 
 setwd('~/Dropbox/new.projects/Dale and Bhat CogSys SINDy/')
+
 library(pracma)
 library(entropy)
 library(sindyr)
@@ -16,20 +17,27 @@ library(sindyr)
 #
 ########################################################################
 
-as = seq(from=2.3,to=3,by=.1) # gather coupled map data
+as = seq(from=2.3,to=3,by=.01) # gather coupled map data
 all_data = c()
 x = runif(1)
-c_y_to_x = 1 # strength of influence between system x and y
-c_x_to_y = 1
+c_y_to_x = .1 # strength of influence between system x and y
+c_x_to_y = .1
 for (a in as) {
   print(a)
   data_temp = c()
   x = runif(1)
   y = runif(1)
-  for (i in 1:200) {
+  for (i in 1:100) {
     #print(xs)
-    x = a*(1-x)*(1-c_y_to_x*(x-y))*x # x goes first
-    y = a*(1-y)*(1-c_x_to_y*(y-x))*y
+    if (runif(1)>.5) {
+      x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
+      y = a*(1-y)*(1-c_x_to_y*(y-x))*y
+    } else {
+      y = a*(1-y)*(1-c_x_to_y*(y-x))*y
+      x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
+    }
+    if (x>1) {x=1}
+    if (y>1) {y=1}
     data_temp = rbind(data_temp,data.frame(a=a,x=x,y=y))
   }
   all_data = rbind(all_data,data_temp)
@@ -59,10 +67,12 @@ for (i in 2:ncol(Theta)) {
 dev.off()
 
 # run sindy (using function in some_functions.R)
-dx = as.matrix(all_data[2:nrow(all_data),])
+# given y is t+1 relative to x, we must make a shift:
+dx = as.matrix(all_data[2:(nrow(all_data)),])
 xs = all_data[1:(nrow(all_data)-1),]
-B = sindyr::sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=.4)
-B
+#B = sindyr::sindy(xs=xs,dx=dx,Theta=features(xs,4),lambda=0.3)
+sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,4),lambda=0.05)
+sindy.obj$B
 # norm(Theta %*% XiD - dx)/norm(dx) # error
 
 #
@@ -70,37 +80,38 @@ B
 #
 
 # expected coefficients for x
-B_good = matrix(0,nrow=35,ncol=3)
-B_good[5,2] = 1
-B_good[11,2] = 1
-B_good[13,2] = -2
-B_good[26,2] = 1
-B_good[22,2] = -1
+B.expected = matrix(0,nrow=35,ncol=3)
+B.expected[5,2] = 1
+B.expected[11,2] = 1
+B.expected[13,2] = -2
+B.expected[26,2] = 1
+B.expected[22,2] = -1
 
 # expected coefficients for y
-B_good = matrix(0,nrow=35,ncol=3)
-B_good[5,2] = 1
-B_good[11,2] = 1
-B_good[13,2] = -2
-B_good[26,2] = 1
-B_good[22,2] = -1
+B.expected[6,3] = 1
+B.expected[11,3] = 1
+B.expected[15,3] = -2
+B.expected[29,3] = 1
+B.expected[23,3] = -1
+
+# and for a
+B.expected[2,1] = 1
 
 ers=c()
-thresholds = seq(from=0,to=0.5,by=.05)
+thresholds = seq(from=0,to=0.4,by=.05)
+
 for (threshold in thresholds) {
   print(threshold)
-  B = sindyr::sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold)
-  ent = entropy(abs(B[,2]))/log(length(B[,2]))
-  score = sum(B[,2]>0)/length(B[,2])
-  p_dx = features(xs,4) %*% B
-  prediction.error = sqrt(mean(p_dx[,2]-dx[,2])^2)
+  #sindy.obj = sindyr::sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold)
+  sindy.obj = sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold,B.expected=B.expected)
+  #ent = entropy(abs(B[,2]))/log(length(B[,2]))
   ers = rbind(ers,data.frame(threshold=threshold,
-                         ground.truth.error=sqrt(mean((B_good[,2]-B[,2])^2)),
-                         ent=ent,prediction.error=prediction.error,score=score))
+                         ground.truth.error=sindy.obj$B.err,
+                         prediction.error=sindy.obj$pred.err,score=sindy.obj$prop.coef))
   
 }
 plot(ground.truth.error~threshold,data=ers,type='b',ylim=c(0,10),lwd=2,col='green')
-points(ent~threshold,data=ers,type='b',col='red',lwd=2)
+#points(ent~threshold,data=ers,type='b',col='red',lwd=2)
 points(prediction.error~threshold,data=ers,type='b',col='blue',lwd=2)
 points(score~threshold,data=ers,type='b',col='orange',lwd=2)
 
