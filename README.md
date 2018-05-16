@@ -1,6 +1,5 @@
-# sindyr
 
-## Tools for Sparse Identification of Nonlinear Dynamics with R
+## sindyr: Tools for Sparse Identification of Nonlinear Dynamics with R
 
 `sindyr` is an R library for inferring ordinary differential equations from raw data, based on SINDy by Brunton et al. (2016). The library also extends this method in several ways, including a sliding window tool that generates descriptive measures of a system from SINDy.
 
