@@ -4,7 +4,7 @@ Title: Tools for Sparse Identification of Nonlinear
            Dynamics for R
 Version: 0.001
 Date: 2018-05-15
-Author: Rick Dale
+Author: Rick Dale and Harish Bhat
 Maintainer: Rick Dale <racdale@gmail.com>
 Description: 
     This implements the Brunton et al (2016; PNAS) sparse
@@ -15,4 +15,3 @@ Description:
 Depends: R (>= 3.0.0), pracma
 License: GPL (>= 2)
 NeedsCompilation: no
-RoxygenNote: 6.0.1

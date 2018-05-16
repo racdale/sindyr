@@ -9,6 +9,11 @@ If you use the code, toss us a shout out by citing:
 
 Under "dale-bhat-materials," we show several example uses of `sindyr`, based on the manuscript cited above. For a quick start, consider perusing the reconstruction of the Lorenz attractor's equations using `sindyr` [here](dale-bhat-materials/Figure_3.R). 
 
-References:
+### Installation
+
+`install.packages('devtools')
+devtools::install_github('racdale/sindyr')`
+
+### References:
 
 > Brunton, S. L., Proctor, J. L., & Kutz, J. N. (2016). Discovering governing equations from data by sparse identification of nonlinear dynamical systems. Proceedings of the National Academy of Sciences, 113(15), 3932-3937.
