@@ -1,5 +1,5 @@
-\name{sindyr}
-\alias{sindyr}
+\name{sindy}
+\alias{sindy}
 
 \title{Run main SINDy function}
 \description{
