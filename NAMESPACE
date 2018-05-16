@@ -1,5 +1,3 @@
-useDynLib(sindyr)
-
 export(finite_difference, 
        finite_differences, 
        sindy, 
