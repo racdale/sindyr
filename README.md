@@ -11,8 +11,9 @@ Under "dale-bhat-materials," we show several example uses of `sindyr`, based on 
 
 ### Installation
 
-`install.packages('devtools')
-devtools::install_github('racdale/sindyr')`
+`install.packages('devtools')`
+
+`devtools::install_github('racdale/sindyr')`
 
 ### References:
 
