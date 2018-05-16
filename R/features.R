@@ -1,28 +1,32 @@
-#' Generate a sequence of numeric identifiers
+#' Generate Features for SINDy Input
 #' 
-#' @param rsrc location of file or resource, or string literal
-#' @param typ specify whether 'file', 'url', or 'string'
-#' @param removeStopwords omit closed-class words - 'stopwords'
+#' @param x raw data to be converted into features
+#' @param polyorder order of polynomials (including k-th self products)
+#' @return a new matrix of data with features from raw data
 
-.packageName <- 'crqanlp'
+.packageName <- 'sindyr'
 
-text_win_rqa = function(rsrc,typ='file',winsz = 10 ,wshft = 10,removeStopwords=F,embed=1,tw=1,limit=-1,shuffle=F) {
-  ts = get_text_series(rsrc,typ=typ,removeStopwords=removeStopwords)
-  #rqa_res = crqa(ts,ts,delay=1,embed=embed,radius=.001,rescale=F,normalize=F,mindiagline=2,minvertline=2,tw=tw)
-  if (limit>-1 & length(ts)>limit) {
-    ts = ts[1:limit]
+features = function(x,polyorder=2) {
+  nc = ncol(x)
+  if (polyorder>1) { # if polyorder is not greater than 1, then what are you doing here?
+    for (i in 2:polyorder) { # let's make some snazzy names for our derived features
+      x2 = x 
+      colnames(x2) = paste(colnames(x),'_',i,sep='')
+      x = cbind(x,x2) # make one for each order requested
+    }
   }
-  if (shuffle==T) {
-    ts = sample(ts,length(ts))
+  f = eval(parse(text=paste('~(.)^',polyorder,sep=''))) # now, let's get the full set of polyorder-th terms
+  x_temp = model.matrix(f,x) # this will let us build the derived features
+  x_nms = gsub('_\\d','',colnames(x_temp)) # we want to pass on the variable names here using _X as a search key
+  uniq_nms = unique(x_nms) # this can produce some equivalences (e.g., xxy, yxx), so let's reduce
+  for (i in 1:length(uniq_nms)) { # for all unique ones, let's get some nice names
+    uniq_nms[i] = paste(sort(unlist(strsplit(uniq_nms[i],':'))),collapse=':') # rebuild interaction term names with :
   }
-  if (length(ts)<winsz) {
-    print('Time series is too short given window parameters.')
-    rqa_res = data.frame(crqwin=-1,TREND=-1)
-    return(rqa_res)
+  uniq_nms = unique(uniq_nms) # let's reduce again looking for repeats
+  x = c()
+  for (n in uniq_nms) { # okay, let's start to build the materials for the party, based on what unique items remain
+    x = cbind(x,x_temp[,which(x_nms==n)[1]])
   }
-  rqa_res = wincrqa(ts,ts,windowstep=wshft,windowsize=winsz,delay=1,
-               embed=embed,rescale=0,radius=.001,normalize=0,
-               mindiagline=2,minvertline=2,tw=tw,whiteline=F,trend=F)
-  colnames(rqa_res$crqwin) = c('RR','DET','NRLINE','maxL','L','ENTR','rENTR','LAM','TT','window')
-  return(rqa_res)
+  colnames(x) = uniq_nms # now we have the unique names
+  return(x) # press the red button and run
 }

@@ -1,19 +1,15 @@
-#' Run Recurrence Quantification Analysis on text
+#' Perform Method of Finite Differences Over Multiple Columns
 #' 
-#' @param rsrc location of file or resource, or string literal
-#' @param typ specify whether 'file', 'url', or 'string'
-#' @param removeStopwords omit closed-class words - 'stopwords'
+#' @param xs raw data to be differentiated
+#' @param S sample rate of data to return derivatives using raw time
+#' @return set of first-order numerical derivatives estimated from data, using finDiff
 
-.packageName <- 'crqanlp'
+.packageName <- 'sindyr'
 
-text_rqa = function(rsrc,typ='file',removeStopwords=F,embed=1,tw=1,limit=-1,shuffle=F) {
-  ts = get_text_series(rsrc,typ=typ,removeStopwords=removeStopwords)
-  if (limit>-1 & length(ts)>limit) {
-    ts = ts[1:limit]
+finite_differences = function(xs,S) {
+  dx = c()
+  for (i in 1:ncol(xs)) { # if we have lots of state variables, let's findDiff 'em individually
+    dx = cbind(dx,finDiff(xs[,i],S))
   }
-  if (shuffle==T) {
-    ts = sample(ts,length(ts))
-  }
-  rqa_res = crqa(ts,ts,delay=1,embed=embed,radius=.001,rescale=F,normalize=F,mindiagline=2,minvertline=2,tw=tw)
-  return(rqa_res)
+  return(dx) # Sorry dx, I have to ask you to leave. Know I'll miss you.
 }

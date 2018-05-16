@@ -1,19 +1,18 @@
-Package: crqanlp
+Package: sindyr
 Type: Package
-Title: Cross-Recurrence Quantification Analysis for 
-           Dynamic Natural Language Processing
-Version: 0.3
-Date: 2018-03-19
-Author: Rick Dale and Moreno Coco
+Title: Tools for Sparse Identification of Nonlinear
+           Dynamics for R
+Version: 0.001
+Date: 2018-05-15
+Author: Rick Dale
 Maintainer: Rick Dale <racdale@gmail.com>
 Description: 
-    Cross-recurrence quantification analysis 
-    for word series, from text, known as categorical
-    recurrence analysis. Uses the 'crqa' R package
-    by Coco and Dale (2014) <doi:10.3389/fpsyg.2014.00510>. 
-    Functions are wrappers to facilitate exploration 
-    of the sequential properties of text.
-Depends: R (>= 3.0.0), crqa, tm, corpus, gutenbergr, RCurl
+    This implements the Brunton et al (2016; PNAS) sparse
+    identification algorithm for finding ordinary differential
+    equations for a measured system from raw data (SINDy). The library
+    includes a set of additional tools for working with raw
+    data, with an emphasis on cognitive science applications.
+Depends: R (>= 3.0.0), pracma
 License: GPL (>= 2)
 NeedsCompilation: no
 RoxygenNote: 6.0.1

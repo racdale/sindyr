@@ -1,17 +1,14 @@
-#' Assign a code with an existing list of words (indices used)
+#' Main SINDy Code
 #' 
-#' @param xs matrix of features to train sindy
-#' @param dx matrix of main system variable dervatives; if NULL, sindy estimates with finite differences
-#' @param dx matrix of main system variable dervatives; if NULL, sindy estimates with finite differences
-#' @param dx matrix of main system variable dervatives; if NULL, sindy estimates with finite differences
-#' @return a vector of numeric identifiers of lexical items
+#' @param xs matrix of raw data
+#' @param dx matrix of main system variable dervatives; if NULL, sindy estimates with finite differences from xs
+#' @param Theta matrix of features; if not supplied, assumes polynomial features of order 3
+#' @param lambda threshold to use for iterated least squares sparsification (Brunton et al.)
+#' @return a matrix B of coefficients specifying the relationship between dx and Theta
 
-# NOTE: I thought that this function could have been used 
-# to subcategorize words under the same numerical identifier 
+.packageName <- 'sindyr'
 
-.packageName <- 'sindylicious'
-
-sindylicious = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05) {
+sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05) {
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
     for (i in 1:ncol(xs)) {

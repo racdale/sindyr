@@ -1,17 +1,19 @@
-#' Generate a sequence of numeric identifiers
+#' Perform Method of Finite Differences Over One Column
 #' 
-#' @param RP recurrence matrix, output from crqa library
-#' @param xlab x label on plot's x-axis
-#' @param ylab y label on plot's y-axis
-#' @param cex size of marker
-#' @return generates a plot; no value returned
+#' @param x raw data to be differentiated
+#' @param S sample rate of data to return derivatives using raw time
+#' @return first-order numerical derivatives estimated from data
 
-.packageName <- 'crqanlp'
+.packageName <- 'sindyr'
 
-## should not we pass the par() arguments directly from the plot function?
-
-plot_rp = function(RP,xlab='i',ylab='j',cex=.1) { ## should not this contain also a filepath to store the RP?
-  if (!is.matrix(RP)) { RP = as.matrix(RP) }
-  ij = which(RP==1,arr.ind=T)
-  plot(ij[,1],ij[,2],cex=cex,xlab=xlab,ylab=ylab,pch=16) # should not pch also be parametrizable?
+# S = unit of time across samples
+finite_difference = function(x, S) {
+  n = length(x)
+  fdx <- vector(length = n)
+  fdx[1] = (x[2]-x[1])/S # first derivative
+  for (i in 3:(n-1)) {
+    fdx[i-2] = (x[i] - x[i-2]) / (2*S) # the intermediate ones
+  }
+  fdx[n] = (x[n] - x[n - 1]) / S # the last one
+  return(fdx) # exchange envelopes
 }

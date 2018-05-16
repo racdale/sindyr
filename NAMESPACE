@@ -1,14 +1,9 @@
-export(assign_codes, 
-       clean_text, 
-       get_text_series, 
-       plot_rp, 
-       text_rqa, 
-       text_win_rqa)
+export(finite_difference, 
+       finite_differences, 
+       sindy, 
+       windowed_sindy, 
+       features)
 
-import(crqa, 
-       tm, 
-       corpus, 
-       gutenbergr, 
-       RCurl)
+import(pracma)
 
 importFrom("graphics", "plot")
