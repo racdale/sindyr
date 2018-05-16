@@ -12,7 +12,7 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05) {
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
     for (i in 1:ncol(xs)) {
-      dx[,i] = finDiff(xs[,i],dt) # take finite differences approach
+      dx[,i] = finite_difference(xs[,i],dt) # take finite differences approach
     }
     dx = as.matrix(dx) # store as matrix
   }

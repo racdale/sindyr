@@ -1,12 +1,14 @@
 #########################################################################
 #
-# coded by Rick Dale and Harish Bhat
+# coded by Rick Dale
 # Adapted from the MATLAB code of Brunton et al. (2016), PNAS
 #
 #########################################################################
+
 setwd('~/Dropbox/new.projects/multiModal/Dale and Bhat/')
 source('R_code/some_functions.R')
 library(pracma)
+library(sindyr)
 
 ########################################################################
 #
@@ -14,7 +16,7 @@ library(pracma)
 #
 ########################################################################
 
-library(crqa)
+library(crqa) # for Lorenz
 dt = .001
 numsteps = 50000; dt = dt; sigma = 10; r = 28; b = 2.6;
 xs = data.frame(lorenzattractor(numsteps, dt, sigma, r, b, plots=F))
@@ -35,12 +37,12 @@ plot(xs$z,type='l',xlab='t',ylab='z')
 dev.off()
 
 # plot the features
-Theta = features(xs,3) # grid of features
+Theta = sindyr::features(xs,3) # grid of features
 par(mfrow=c(3,3),oma = c(2,0,0,0) + 0.1,mar = c(1,1,1,1) + 0.1)
 for (i in 2:ncol(Theta)) {
   plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
 }
 dev.off()
 
-B = sindylicious(xs=xs,dt=dt,lambda=.5)
+B = sindyr::sindy(xs=xs,dt=dt,lambda=.5)
 B

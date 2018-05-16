@@ -9,7 +9,7 @@
 finite_differences = function(xs,S) {
   dx = c()
   for (i in 1:ncol(xs)) { # if we have lots of state variables, let's findDiff 'em individually
-    dx = cbind(dx,finDiff(xs[,i],S))
+    dx = cbind(dx,finite_difference(xs[,i],S))
   }
   return(dx) # Sorry dx, I have to ask you to leave. Know I'll miss you.
 }

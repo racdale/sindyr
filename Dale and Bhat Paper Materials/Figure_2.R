@@ -1,12 +1,14 @@
 #########################################################################
 #
-# coded by Rick Dale and Harish Bhat
+# coded by Rick Dale
 # Adapted from the MATLAB code of Brunton et al. (2016), PNAS
 #
 #########################################################################
+
 setwd('~/Dropbox/new.projects/multiModal/Dale and Bhat/')
 source('R_code/some_functions.R')
 library(pracma)
+library(sindyr)
 
 ########################################################################
 #
@@ -54,6 +56,6 @@ for (i in 2:ncol(Theta)) {
 dev.off()
 
 # run sindy (using function in some_functions.R)
-B = sindylicious(xs=xs,dx=dx)
+B = sindyr::sindy(xs=xs,dx=dx)
 B
 # norm(Theta %*% XiD - dx)/norm(dx) # error

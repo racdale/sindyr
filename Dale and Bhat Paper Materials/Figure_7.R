@@ -1,23 +1,25 @@
 #########################################################################
 #
-# coded by Rick Dale and Harish Bhat
+# coded by Rick Dale
 # Adapted from the MATLAB code of Brunton et al. (2016), PNAS
 #
 #########################################################################
+
 setwd('~/Dropbox/new.projects/Dale and Bhat CogSys SINDy/')
-source('R_code/some_functions.R')
 library(pracma)
 library(entropy)
+library(sindyr)
+
 ########################################################################
 #
-# Coupled logistic maps
+# Coupled logistic maps (from Buder, 1991; see Dale & Bhat for details)
 #
 ########################################################################
 
-as = seq(from=2.3,to=3,by=.1)
+as = seq(from=2.3,to=3,by=.1) # gather coupled map data
 all_data = c()
 x = runif(1)
-c_y_to_x = 1
+c_y_to_x = 1 # strength of influence between system x and y
 c_x_to_y = 1
 for (a in as) {
   print(a)
@@ -26,8 +28,8 @@ for (a in as) {
   y = runif(1)
   for (i in 1:200) {
     #print(xs)
+    x = a*(1-x)*(1-c_y_to_x*(x-y))*x # x goes first
     y = a*(1-y)*(1-c_x_to_y*(y-x))*y
-    x = a*(1-x)*(1-c_y_to_x*(x-y))*x
     data_temp = rbind(data_temp,data.frame(a=a,x=x,y=y))
   }
   all_data = rbind(all_data,data_temp)
@@ -36,7 +38,7 @@ all_data[1:4,]
 hist(all_data[,2])
 
 # 
-# let's get some plots
+# plot of system variables
 #
 
 pdf('figures/figure_7_a.pdf',width=5,height=5)
@@ -59,16 +61,15 @@ dev.off()
 # run sindy (using function in some_functions.R)
 dx = as.matrix(all_data[2:nrow(all_data),])
 xs = all_data[1:(nrow(all_data)-1),]
-B = sindylicious(xs=all_data,dx=dx,Theta=features(xs,4),lambda=.4)
+B = sindyr::sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=.4)
 B
 # norm(Theta %*% XiD - dx)/norm(dx) # error
 
 #
-# method for identifying best threshold?
-# idea: it is somewhere between sparsity, range of paragraph (integer?)
+# method for identifying best threshold
 #
 
-# for x
+# expected coefficients for x
 B_good = matrix(0,nrow=35,ncol=3)
 B_good[5,2] = 1
 B_good[11,2] = 1
@@ -76,21 +77,19 @@ B_good[13,2] = -2
 B_good[26,2] = 1
 B_good[22,2] = -1
 
-# for y
+# expected coefficients for y
 B_good = matrix(0,nrow=35,ncol=3)
 B_good[5,2] = 1
 B_good[11,2] = 1
 B_good[13,2] = -2
 B_good[26,2] = 1
 B_good[22,2] = -1
-
-# first thing to do: check B_good for y, and determine the needed threshold... it is not obvious
 
 ers=c()
-thresholds = seq(from=0,to=2,by=.2)
+thresholds = seq(from=0,to=0.5,by=.05)
 for (threshold in thresholds) {
   print(threshold)
-  B = sindylicious(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold)
+  B = sindyr::sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold)
   ent = entropy(abs(B[,2]))/log(length(B[,2]))
   score = sum(B[,2]>0)/length(B[,2])
   p_dx = features(xs,4) %*% B
