@@ -7,7 +7,7 @@ If you use the code, toss us a shout out by citing:
 
 > Dale, R. & Bhat, H. (submitted). Equations of mind: Data science for inferring differential equations.
 
-Under "Dale and Bhat Paper Materials," we show several example uses of `sindyr`, based on the manuscript cited above.
+Under "dale-bhat-materials," we show several example uses of `sindyr`, based on the manuscript cited above. For a quick start, consider perusing the reconstruction of the Lorenz attractor's equations using `sindyr` [here](dale-bhat-materials/Figure_3.R). 
 
 References:
 
