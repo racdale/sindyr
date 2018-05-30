@@ -4,6 +4,6 @@ export(finite_difference,
        windowed_sindy, 
        features)
 
-import(pracma)
+import(pracma,arrangements,matrixStats)
 
 importFrom("graphics", "plot")

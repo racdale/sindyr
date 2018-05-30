@@ -6,8 +6,6 @@
 #########################################################################
 
 setwd('~/Dropbox/new.projects/multiModal/Dale and Bhat/')
-source('R_code/some_functions.R')
-library(pracma)
 library(sindyr)
 
 ########################################################################
@@ -16,6 +14,7 @@ library(sindyr)
 #
 ########################################################################
 
+set.seed(69)
 as = seq(from=2.1,to=3.99,by=.05)
 xs = c()
 x = runif(1)
@@ -56,6 +55,6 @@ for (i in 2:ncol(Theta)) {
 dev.off()
 
 # run sindy (using function in some_functions.R)
-B = sindyr::sindy(xs=xs,dx=dx)
-B
+B = sindy(xs=xs,dx=dx)
+B$B
 # norm(Theta %*% XiD - dx)/norm(dx) # error

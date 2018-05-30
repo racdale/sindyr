@@ -6,8 +6,6 @@
 #########################################################################
 
 setwd('~/Dropbox/new.projects/multiModal/Dale and Bhat/')
-source('R_code/some_functions.R')
-library(pracma)
 library(sindyr)
 
 ########################################################################
@@ -16,6 +14,7 @@ library(sindyr)
 #
 ########################################################################
 
+set.seed(69)
 library(crqa) # for Lorenz
 dt = .001
 numsteps = 50000; dt = dt; sigma = 10; r = 28; b = 2.6;
@@ -44,5 +43,6 @@ for (i in 2:ncol(Theta)) {
 }
 dev.off()
 
-B = sindyr::sindy(xs=xs,dt=dt,lambda=.5)
-B
+sindy.obj = sindy(xs=xs,dt=dt,lambda=.5)
+sindy.obj$B
+
