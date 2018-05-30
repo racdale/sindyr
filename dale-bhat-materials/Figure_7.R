@@ -18,7 +18,9 @@ library(sindyr)
 
 coupled_logistic = function(seed=69,connection=1,iterations_per_a=100) {
   set.seed(seed)
-  as = seq(from=2.5,to=3,by=.01) # gather coupled map data
+  as = seq(from=2.4,to=4-connection,by=.01) # gather coupled map data
+  # note that control parameter is dictated by connection -- 
+  # fully connected, limit is 3, not at all, 4 (standard logistic)
   all_data = c()
   x = runif(1)
   y = runif(1)
@@ -30,17 +32,18 @@ coupled_logistic = function(seed=69,connection=1,iterations_per_a=100) {
       x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
       y = a*(1-y)*(1-c_x_to_y*(y-x))*y
       data_temp = rbind(data_temp,data.frame(a=a,x=x,y=y))
+      if (x>1) { x = 1 }
+      if (y>1) { y = 1 }
     }
     all_data = rbind(all_data,data_temp)
   }  
   return(all_data)
-  #hist(all_data[,2])
 }
 
-xs = coupled_logistic(seed=67,connection=0,iterations_per_a=100)
+xs = coupled_logistic(seed=67,connection=0.2,iterations_per_a=100)
 dx = as.matrix(xs[2:(nrow(xs)),])
 xs = xs[1:(nrow(xs)-1),]
-sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.1)
+sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.4,fit.its=10)
 sindy.obj$B
 
 # 
@@ -64,7 +67,6 @@ for (i in 2:ncol(Theta)) {
 }
 dev.off()
 
-
 #
 # method for identifying best threshold
 #
@@ -83,31 +85,4 @@ B.expected[11,3] = 1
 B.expected[15,3] = -2
 B.expected[29,3] = 1
 B.expected[23,3] = -1
-
-# and for a
-B.expected[2,1] = 1
-
-ers=c()
-thresholds = seq(from=0,to=1,by=.05)
-
-for (threshold in thresholds) {
-  print(threshold)
-  #sindy.obj = sindyr::sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold)
-  sindy.obj = sindy(xs=all_data,dx=dx,Theta=features(xs,4),lambda=threshold,B.expected=B.expected)
-  #ent = entropy(abs(B[,2]))/log(length(B[,2]))
-  ers = rbind(ers,data.frame(threshold=threshold,
-                         ground.truth.error=sindy.obj$B.err,
-                         prediction.error=sindy.obj$pred.err,score=sindy.obj$prop.coef))
-  
-}
-plot(ground.truth.error~threshold,data=ers,type='b',ylim=c(0,10),lwd=2,col='green')
-#points(ent~threshold,data=ers,type='b',col='red',lwd=2)
-points(prediction.error~threshold,data=ers,type='b',col='blue',lwd=2)
-points(score~threshold,data=ers,type='b',col='orange',lwd=2)
-
-
-
-
-
-
 

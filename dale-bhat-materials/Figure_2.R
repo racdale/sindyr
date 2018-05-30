@@ -33,6 +33,11 @@ xs[1:4,]
 dx = as.matrix(xs[2:nrow(xs),])
 xs = xs[1:(nrow(xs)-1),]
 
+# run sindy (using function in some_functions.R)
+B = sindy(xs=xs,dx=dx)
+B$B
+# norm(Theta %*% XiD - dx)/norm(dx) # error
+
 # 
 # let's get some plots
 #
@@ -53,8 +58,3 @@ for (i in 2:ncol(Theta)) {
   plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
 }
 dev.off()
-
-# run sindy (using function in some_functions.R)
-B = sindy(xs=xs,dx=dx)
-B$B
-# norm(Theta %*% XiD - dx)/norm(dx) # error

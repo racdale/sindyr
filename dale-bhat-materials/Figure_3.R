@@ -22,6 +22,10 @@ xs = data.frame(lorenzattractor(numsteps, dt, sigma, r, b, plots=F))
 colnames(xs) = list('x','y','z')
 
 xs = xs[2000:nrow(xs),] # cut out initialization
+
+sindy.obj = sindy(xs=xs,dt=dt,lambda=.5)
+sindy.obj$B
+
 pdf('figures/figure_3_3d.pdf',width=4,height=4)
 points3D(xs$x,xs$y,xs$z,type='l',col='black')
 dev.off()
@@ -36,13 +40,11 @@ plot(xs$z,type='l',xlab='t',ylab='z')
 dev.off()
 
 # plot the features
-Theta = sindyr::features(xs,3) # grid of features
+Theta = features(xs,3) # grid of features
 par(mfrow=c(3,3),oma = c(2,0,0,0) + 0.1,mar = c(1,1,1,1) + 0.1)
 for (i in 2:ncol(Theta)) {
   plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
 }
 dev.off()
 
-sindy.obj = sindy(xs=xs,dt=dt,lambda=.5)
-sindy.obj$B
 
