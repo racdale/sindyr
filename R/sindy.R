@@ -10,7 +10,7 @@
 
 .packageName <- 'sindyr'
 
-sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05,B.expected=NULL,verbose=F) {
+sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05,B.expected=NULL,verbose=F,fit.its=10) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
@@ -26,7 +26,7 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05,B.expected=NULL,verbose=F
   
   B = mldivide(Theta,dx) # now, the party startsy; let's do left division
   if (lambda>0) { # if lambda is zero, then all our coefficients stay, otherwise...
-    for (k in 1:10) { # ...cycle 10 times and refit
+    for (k in 1:fit.its) { # ...cycle 10 (fit.its) times and refit
       zero_inds = which(abs(B)<lambda); # find which should be zero
       B[zero_inds]=0; # set 'em to zero
       for (ind in 1:ncol(dx)) { # go through our system variables

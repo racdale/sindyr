@@ -5,7 +5,7 @@
 #
 #########################################################################
 
-setwd('~/Dropbox/new.projects/multiModal/Dale and Bhat/')
+setwd('~/Dropbox/new.projects/Dale and Bhat CogSys SINDy/sindyr/dale-bhat-materials/')
 library(sindyr)
 
 ########################################################################

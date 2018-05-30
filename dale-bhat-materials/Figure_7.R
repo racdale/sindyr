@@ -8,7 +8,6 @@
 setwd('~/Dropbox/new.projects/Dale and Bhat CogSys SINDy/sindyr/dale-bhat-materials/')
 
 library(pracma)
-library(entropy)
 library(sindyr)
 
 ########################################################################
@@ -17,34 +16,32 @@ library(sindyr)
 #
 ########################################################################
 
-as = seq(from=2.5,to=3,by=.05) # gather coupled map data
-all_data = c()
-x = runif(1)
-c_y_to_x = 1 # strength of influence between system x and y
-c_x_to_y = 1
-for (a in as) {
-  print(a)
-  data_temp = c()
+coupled_logistic = function(seed=69,connection=1,iterations_per_a=100) {
+  set.seed(seed)
+  as = seq(from=2.5,to=3,by=.01) # gather coupled map data
+  all_data = c()
   x = runif(1)
   y = runif(1)
-  for (i in 1:100) {
-    # print(xs)
-    # if (runif(1)>.5) {
-       x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
-       y = a*(1-y)*(1-c_x_to_y*(y-x))*y
-       data_temp = rbind(data_temp,data.frame(a=a,x=x,y=y))
-    # } else {
-    #   y = a*(1-y)*(1-c_x_to_y*(y-x))*y
-    #   x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
-    # }
-    # if (x>1) {x=1} # force back to 1; outside of unit interval leads to Inf
-    # if (y>1) {y=1}
-    
-  }
-  all_data = rbind(all_data,data_temp)
-}  
-all_data[1:4,]
-hist(all_data[,2])
+  c_y_to_x = connection # strength of influence between system x and y
+  c_x_to_y = connection
+  for (a in as) {
+    data_temp = c()
+    for (i in 1:iterations_per_a) {
+      x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
+      y = a*(1-y)*(1-c_x_to_y*(y-x))*y
+      data_temp = rbind(data_temp,data.frame(a=a,x=x,y=y))
+    }
+    all_data = rbind(all_data,data_temp)
+  }  
+  return(all_data)
+  #hist(all_data[,2])
+}
+
+xs = coupled_logistic(seed=67,connection=0,iterations_per_a=100)
+dx = as.matrix(xs[2:(nrow(xs)),])
+xs = xs[1:(nrow(xs)-1),]
+sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.1)
+sindy.obj$B
 
 # 
 # plot of system variables
@@ -67,23 +64,6 @@ for (i in 2:ncol(Theta)) {
 }
 dev.off()
 
-# run sindy (using function in some_functions.R)
-# given y is t+1 relative to x, we must make a shift:
-dx = as.matrix(all_data[2:(nrow(all_data)),])
-xs = all_data[1:(nrow(all_data)-1),]
-#B = sindyr::sindy(xs=xs,dx=dx,Theta=features(xs,4),lambda=0.3)
-ts = c()
-for (o in 2:7) {
-  print(o)
-  t1 = proc.time()
-  sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3,intercept=T),lambda=.05)
-  t2 = proc.time()
-  ts = c(ts,t2[3]-t1[3])
-}
-plot(2:7,ts,type='b')
-sindy.obj$B
-cbind(sindy.obj$B,B.expected)
-# norm(Theta %*% XiD - dx)/norm(dx) # error
 
 #
 # method for identifying best threshold
