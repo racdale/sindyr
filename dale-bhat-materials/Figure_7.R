@@ -40,11 +40,16 @@ coupled_logistic = function(seed=69,connection=1,iterations_per_a=100) {
   return(all_data)
 }
 
-xs = coupled_logistic(seed=67,connection=0.2,iterations_per_a=100)
-dx = as.matrix(xs[2:(nrow(xs)),])
-xs = xs[1:(nrow(xs)-1),]
-sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.4,fit.its=10)
-sindy.obj$B
+connections = seq(from=0,to=1,by=.05)
+for (connection in connections) {
+  xs = coupled_logistic(seed=67,connection=connection,iterations_per_a=100)
+  dx = as.matrix(xs[2:(nrow(xs)),])
+  xs = xs[1:(nrow(xs)-1),]
+  pdf(paste0('figures/figure_7_nets/',connection,'.pdf'),width=5,height=3)
+  sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.4,fit.its=10,plot.eq.graph=T)
+  dev.off()
+  sindy.obj$B
+}
 
 # 
 # plot of system variables
@@ -66,23 +71,4 @@ for (i in 2:ncol(Theta)) {
   plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
 }
 dev.off()
-
-#
-# method for identifying best threshold
-#
-
-# expected coefficients for x
-B.expected = matrix(0,nrow=35,ncol=3)
-B.expected[5,2] = 1
-B.expected[11,2] = 1
-B.expected[13,2] = -2
-B.expected[26,2] = 1
-B.expected[22,2] = -1
-
-# expected coefficients for y
-B.expected[6,3] = 1
-B.expected[11,3] = 1
-B.expected[15,3] = -2
-B.expected[29,3] = 1
-B.expected[23,3] = -1
 

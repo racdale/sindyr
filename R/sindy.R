@@ -10,7 +10,10 @@
 
 .packageName <- 'sindyr'
 
-sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05,B.expected=NULL,verbose=F,fit.its=10,plot.eq.graph=F) {
+sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
+                 B.expected=NULL,verbose=F,fit.its=10,
+                 plot.eq.graph=F, # wanna graph a network from the terms?
+                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,vertex.color='white')) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
@@ -70,7 +73,7 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05,B.expected=NULL,verbose=F
     B = cbind(data.frame(0,B))
     ixs = which(B!=0,arr.ind=T)
     g = graph.data.frame(ixs,directed=T)
-    plot(g,vertex.label=row.names(B)[unique(as.vector(ixs))],vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,vertex.color='white')
+    plot(g,vertex.label=row.names(B)[unique(as.vector(ixs))])
   }  
   
   return(sindy.obj) # put it in the mailbox
