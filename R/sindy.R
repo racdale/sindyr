@@ -13,7 +13,7 @@
 sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
                  B.expected=NULL,verbose=F,fit.its=10,
                  plot.eq.graph=F, # wanna graph a network from the terms?
-                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,layout=layout_nicely)) {
+                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1)) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
@@ -75,14 +75,26 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
     ixs = which(B!=0,arr.ind=T)
     g = graph.data.frame(ixs,directed=T)
     nms = row.names(B)[unique(as.vector(ixs))]
-    intersect(main.vars,nms)
-    V(g)$color <- "white" 
+    intersect(main.vars,nms) # get the main variables (columns)
+    
+    # let's color the core variables vs. predictors (white)
+    V(g)$color = "white" 
     for (mv in main.vars) {
-      V(g)$color[which(nms==mv)] <- "green"
+      V(g)$color[which(nms==mv)] = "green"
     }
-    plot(g,vertex.label=nms,
-         vertex.size=eq.graph.par$vertex.size,edge.arrow.size=eq.graph.par$edge.arrow.size,
-         vertex.label.cex=eq.graph.par$vertex.label.cex,layout=eq.graph.par$layout)
+    
+    # we want to size the rectangles by variable name... 
+    V(g)$label = nms
+    co = layout_nicely(g)
+    plot(0, type="n", ann=FALSE, axes=FALSE, xlim=extendrange(co[,1]), 
+         ylim=extendrange(co[,2]))
+    plot(g,rescale=F,add=T,
+         edge.arrow.size=eq.graph.par$edge.arrow.size,
+         vertex.label.cex=eq.graph.par$vertex.label.cex,
+         layout=co,
+         vertex.shape="rectangle",
+         vertex.size=(strwidth(V(g)$label) + strwidth("oo")) * 100,
+         vertex.size2=strheight("I")*2*100)
   }  
   
   return(sindy.obj) # put it in the mailbox
