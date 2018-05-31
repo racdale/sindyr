@@ -13,7 +13,7 @@
 sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
                  B.expected=NULL,verbose=F,fit.its=10,
                  plot.eq.graph=F, # wanna graph a network from the terms?
-                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,layout=layout_in_circle)) {
+                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,layout=layout_nicely)) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
