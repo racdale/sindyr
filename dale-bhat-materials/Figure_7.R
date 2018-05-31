@@ -40,13 +40,14 @@ coupled_logistic = function(seed=69,connection=1,iterations_per_a=100) {
   return(all_data)
 }
 
-connections = seq(from=0,to=1,by=.05)
+connections = seq(from=0,to=1,by=.25)
 for (connection in connections) {
   xs = coupled_logistic(seed=67,connection=connection,iterations_per_a=100)
   dx = as.matrix(xs[2:(nrow(xs)),])
   xs = xs[1:(nrow(xs)-1),]
-  pdf(paste0('figures/figure_7_nets/',connection,'.pdf'),width=5,height=3)
-  sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.4,fit.its=10,plot.eq.graph=T)
+  pdf(paste0('figures/figure_7_nets/',connection,'.pdf'),width=10,height=10)
+  eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,vertex.color='white',layout=layout_nicely)
+  sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.4,fit.its=10,plot.eq.graph=T,eq.graph.par=eq.graph.par)
   dev.off()
   sindy.obj$B
 }

@@ -13,7 +13,7 @@
 sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
                  B.expected=NULL,verbose=F,fit.its=10,
                  plot.eq.graph=F, # wanna graph a network from the terms?
-                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,vertex.color='white')) {
+                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1,layout=layout_in_circle)) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
@@ -70,10 +70,19 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
   
   if (plot.eq.graph) {
     B = sindy.obj$B
+    main.vars = colnames(B)
     B = cbind(data.frame(0,B))
     ixs = which(B!=0,arr.ind=T)
     g = graph.data.frame(ixs,directed=T)
-    plot(g,vertex.label=row.names(B)[unique(as.vector(ixs))])
+    nms = row.names(B)[unique(as.vector(ixs))]
+    intersect(main.vars,nms)
+    V(g)$color <- "white" 
+    for (mv in main.vars) {
+      V(g)$color[which(nms==mv)] <- "green"
+    }
+    plot(g,vertex.label=nms,
+         vertex.size=eq.graph.par$vertex.size,edge.arrow.size=eq.graph.par$edge.arrow.size,
+         vertex.label.cex=eq.graph.par$vertex.label.cex,layout=eq.graph.par$layout)
   }  
   
   return(sindy.obj) # put it in the mailbox

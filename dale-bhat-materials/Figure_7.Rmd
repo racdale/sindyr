@@ -1,0 +1,69 @@
+---
+title: 'Figure 7: Coupled Logistic Maps'
+author: "Rick Dale"
+date: "5/31/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This code models coupled logistic maps using the function `coupled_logistic` and demonstrates how `sindyr` can be used to plot a graph illustrating the relationship among terms of a recovered set of orderinary differential equations. This demonstration in the Dale and Bhat paper illustrates the use of SINDy for exploring coupled systems, such as in a social dynamic context.
+
+```{r message=FALSE,warning=FALSE}
+
+library(sindyr)
+
+```
+
+This is a function to generate coupled logistic map behavior (Buder, 1991). It allows us to cycle through connectivity of the "socio-cognitive system," and show how SINDy can detect the connectivity between the terms of the recovered equations.
+
+```{r}
+
+coupled_logistic = function(seed=69,connection=1,iterations_per_a=100) {
+  set.seed(seed)
+  as = seq(from=2.4,to=4-connection,by=.01) # gather coupled map data
+  # note that control parameter is dictated by connection -- 
+  # fully connected, limit is 3, not at all, 4 (standard logistic)
+  all_data = c()
+  x = runif(1)
+  y = runif(1)
+  c_y_to_x = connection # strength of influence between system x and y
+  c_x_to_y = connection
+  for (a in as) {
+    data_temp = c()
+    for (i in 1:iterations_per_a) {
+      x = a*(1-x)*(1-c_y_to_x*(x-y))*x 
+      y = a*(1-y)*(1-c_x_to_y*(y-x))*y
+      data_temp = rbind(data_temp,data.frame(a=a,x=x,y=y))
+      if (x>1) { x = 1 }
+      if (y>1) { y = 1 }
+    }
+    all_data = rbind(all_data,data_temp)
+  }  
+  return(all_data)
+}
+
+```
+
+Now let's run the coupled logistic maps across levels of connectivity. When connectivity = 0, the systems are equivalent to the basic logistic map. This is recovered successfully, as illustrated in the plot generated here. As connectivity increases, new terms are introduced in the recovered ODEs. These terms reflect multiplicative interactions between the "social" systems. However, as noted in the main paper, the recovery is not precisely correct when we unfold the terms of the logistic map equations. Instead, we can use SINDy simply to determine that such a social connectivity is present in the system's dynamics. More discussion are in the main paper.
+
+```{r}
+
+connections = seq(from=0,to=1,by=.25)
+for (connection in connections) {
+  # set seed so that the graph can be reproduced exactly
+  xs = coupled_logistic(seed=68,connection=connection,iterations_per_a=100) # general coupled map data (a, x, y)
+  dx = as.matrix(xs[2:(nrow(xs)),]) # derivative in discrete updated systems is just x_{t+1}
+  xs = xs[1:(nrow(xs)-1),] # align original data
+  print(paste0('Connectivity level: ',connection))
+  sindy.obj = sindy(xs=xs,dx=dx,Theta=features(xs,3),lambda=.4,fit.its=10,plot.eq.graph=T)
+  sindy.obj$B # the obtained fit
+}
+
+```
+
+
+
+
