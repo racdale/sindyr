@@ -1,0 +1,55 @@
+---
+title: 'Figure 3: Reconstructing the Lorenz Attractor'
+author: "Rick Dale"
+date: "5/31/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This brief code obtains a simulation of the Lorenz system using the resources in the `crqa` library (Coco and Dale, 2014). For illustration, we plot the system, variables, and the features that are used in SINDy. The code then runs the `sindyr` function to recover the system of equations.
+
+```{r message=FALSE,warning=FALSE}
+
+library(sindyr)
+library(crqa) # for Lorenz
+
+set.seed(666)
+dt = .001
+numsteps = 50000; dt = dt; sigma = 10; r = 28; b = 2.6;
+xs = data.frame(lorenzattractor(numsteps, dt, sigma, r, b, plots=F))
+colnames(xs) = list('x','y','z')
+
+xs = xs[2000:nrow(xs),] # cut out initialization
+
+points3D(xs$x,xs$y,xs$z,type='l',col='black')
+
+# plot the individual variables
+par(mfrow=c(3,1),oma = c(0,0,0,0) + 0.1,mar = c(4.1,4.1,1,1) + 0.1)
+plot(xs$x,type='l',xlab='t',ylab='x')
+plot(xs$y,type='l',xlab='t',ylab='y')
+plot(xs$z,type='l',xlab='t',ylab='z')
+
+# plot the features
+Theta = features(xs,3) # grid of features
+par(mfrow=c(7,3),oma = c(2,0,0,0) + 0.1,mar = c(1,1,1,1) + 0.1)
+for (i in 2:ncol(Theta)) {
+  plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
+}
+```
+
+Here is the reconstruction of this system.
+
+```{r message=FALSE,warning=FALSE}
+
+sindy.obj = sindy(xs=xs,dt=dt,lambda=.5) # let's reconstruct
+sindy.obj$B
+
+```
+
+
+
+
+

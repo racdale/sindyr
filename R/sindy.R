@@ -4,16 +4,16 @@
 #' @param dx matrix of main system variable dervatives; if NULL, sindy estimates with finite differences from xs
 #' @param Theta matrix of features; if not supplied, assumes polynomial features of order 3
 #' @param lambda threshold to use for iterated least squares sparsification (Brunton et al.)
-#' @param B.expected 
-#' @param verbose
+#' @param B.expected matrix of expected coefficients to compute error
+#' @param verbose verbose mode outputs considerably more data to the SINDy object... (S3, see below)
+#' @param plot.eq.graph plot an igraph network of the terms based on coefficients of SINDy model (T/F)
 #' @return a sindy object (S3 class) with coefficients (B), original data, some metrics, and so on; e.g., sindy$B
 
 .packageName <- 'sindyr'
 
 sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
                  B.expected=NULL,verbose=F,fit.its=10,
-                 plot.eq.graph=F, # wanna graph a network from the terms?
-                 eq.graph.par=list(vertex.size=20,edge.arrow.size=.25,vertex.label.cex=1)) {
+                 plot.eq.graph=F) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0
@@ -94,7 +94,7 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
          layout=co,
          vertex.shape="rectangle",
          vertex.size=(strwidth(V(g)$label) + strwidth("oo")) * 100,
-         vertex.size2=strheight("I")*2*100)
+         vertex.size2=strheight("I")*2*100,asp=0)
   }  
   
   return(sindy.obj) # put it in the mailbox

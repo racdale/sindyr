@@ -1,0 +1,93 @@
+---
+title: 'Figure 6: The Effect of Noise on Two-Attractor Well Reconstruction'
+author: "Rick Dale"
+date: "5/31/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Taking the simulation of two-attractor well decision making described in Figure 5 and in Dale and Bhat, we inject noise and demonstrate that SINDy becomes highly unstable. 
+
+```{r message=FALSE,warning=FALSE}
+
+library(sindyr)
+
+logistic_sindy = function(trials=100,noise=0,more.complex=F) {
+  # for GOF tests, here's a desired fit from the Tuller et al. model (Duran & Dale)
+  B.expected = matrix(0,nrow=10,ncol=2)
+  B.expected[2,1] = 1
+  B.expected[2,2] = -1
+  B.expected[3,2] = 2
+  B.expected[10,2] = -1
+  
+  rmses = c()
+  deets = c()
+  for (i in 1:trials) { # let it go for 100 trials
+    x_trial = c()
+    x = 0
+    k = runif(1)-.5 # choose a random tilt
+    x_sum = 0
+    for (j in 1:1000) { # let it take at most 1000 cycles to settle
+      x_trial = rbind(x_trial,data.frame(k=k,x=x,x_sum=x_sum)) # store this trial
+      if (more.complex) {
+        x = x + (-k + x + x^2 - x^3) + noise*(rnorm(1)) # note the additional term x^2
+      } else {
+        x = x + (-k + x - x^3) + noise*(rnorm(1)) # add noise, increment by model
+      }
+      x_sum = x_sum + x
+      
+      if (abs(x_sum)>20) { 
+        break; # did it reach threshold? if so, done and exit
+      }
+      
+    }
+    
+    deets = rbind(deets,x_trial)
+  }
+  sindy.obj = sindy(xs=deets[1:(nrow(deets)-1),1:2],dx=as.matrix(deets[2:nrow(deets),1:2]),lambda=.6,B.expected=B.expected)
+  return(sindy.obj)
+}
+
+# let's rerun the simulation here
+rmses = c()
+set.seed(666) # to reproduce exact figs
+for (noise in seq(from=0,to=.25,length=100)) { # noise level varies
+  sindy.obj = logistic_sindy(noise=noise)
+  rmses = rbind(rmses, data.frame(noise=noise,rmse=sindy.obj$B.err))
+}
+# plot the error by noise level... 
+plot(rmses$noise,rmses$rmse,type='b',xlab='Noise',ylab='RMSE')
+
+```
+
+SINDy can be used as a *relative* estimation of model complexity though, and here, despite noise, it can work quite well. Belowe implement two versions of this attractor-well model. Both contain the same level of noise, but one is more complex -- invoking a second term (x^2) in the update equation. The complexity of recovered equations strongly echoes the underlying complexity of the generating system. This suggests that SINDy may be used for *relative* measures of system complexity, not just absolute interpretations from exact recovery.
+
+```{r}
+
+complexities = c()
+noise = .2 # set a high noise level, judging from the above simulation
+
+for (iter in 1:100) {
+
+  set.seed(666) # seed start the same for each condition
+  B = logistic_sindy(noise=noise)$B # get coefficients only for this demo
+  complexities = rbind(complexities, data.frame(iter=iter,noise=noise,expected=4,complexity=sum(B!=0))) # store data for this run
+
+  set.seed(666) # seed start the same for each condition
+  B = logistic_sindy(noise=noise,more.complex=T)$B # get coefficients only for this demo  
+  complexities = rbind(complexities, data.frame(iter=iter,noise=noise,expected=5,complexity=sum(B!=0))) # store data for this more complex run
+  
+}
+
+summary(lm(complexity~as.factor(expected),data=complexities))
+boxplot(jitter(complexity)~as.factor(expected),data=complexities,ylab='Coefficients (with jitter)',xlab='Expected coefficients')
+
+```
+
+
+
+
+

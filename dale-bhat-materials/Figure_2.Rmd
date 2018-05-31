@@ -1,0 +1,61 @@
+---
+title: 'Figure 2: Reconstructing the Logistic Map'
+author: "Rick Dale"
+date: "5/31/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This brief code obtains a simulation of the simple but wonderful logistic map. Note that, as a discrete system, we take the derivative (dx) to be the system at the next time step. This was done in Brunton et al. (2016) and we do this here. See the text in Dale and Bhat for a discussion of discrete vs. continuous systems. In Figure 3, next, we show a continuous system reconstructed (Lorenz).
+
+```{r message=FALSE,warning=FALSE}
+
+library(sindyr)
+set.seed(666)
+
+as = seq(from=2.1,to=3.99,by=.05) # the range of parameters used
+xs = c()
+x = runif(1)
+for (a in as) {
+  xs_temp = c()
+  x = runif(1)
+  for (i in 1:200) { # 100 iterations per control parameter value
+    x = a*x*(1-x)
+    xs_temp = rbind(xs_temp,data.frame(a=a,x=x))
+  }
+  xs = rbind(xs,xs_temp)
+}  
+xs[1:4,]
+dx = as.matrix(xs[2:nrow(xs),])
+xs = xs[1:(nrow(xs)-1),]
+
+sindy(xs=xs,dx=dx)$B
+
+```
+
+For illustration of the system, we display the system values over the control parameter (`a`), along with the set of features used to reconstruct the logistic map with SINDy.
+
+```{r}
+
+# 
+# let's get some plots
+#
+
+plot(xs[,1],type='p',cex=.5,pch=15,xlab='t',ylab='a') # a
+plot(dx,type='p',cex=.5,pch=15,xlab='t',ylab='dx') # dx
+plot(xs[,2],type='p',cex=.5,pch=15,xlab='t',ylab='x') # x
+Theta = features(xs,3) # grid of features
+par(mfrow=c(3,3),oma = c(2,0,0,0) + 0.1,mar = c(1,1,1,1) + 0.1)
+for (i in 2:ncol(Theta)) {
+  plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
+}
+
+```
+
+
+
+
+

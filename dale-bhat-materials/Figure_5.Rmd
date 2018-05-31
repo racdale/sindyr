@@ -1,0 +1,61 @@
+---
+title: 'Figure 5: Reconstruction the Two-Well Attractor of Tuller et al. (1994)'
+author: "Rick Dale"
+date: "5/31/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here we use SINDy to reconstruct the two-well attractor model described in Tuller et al. (1994) and Duran and Dale (2012). First, here's the potential of this system, V, over which the system variable fluctuates:
+
+```{r message=FALSE,warning=FALSE}
+
+library(sindyr)
+
+x = seq(from=-2,to=2,by=.01)
+V = (0*x - x^2/2 + x^4/4)
+plot(x,V,xlab='x',type='l',lwd=2)
+
+```
+
+Now let's run the attractor model over this potential, collecting 100 trials. In each trial, the system variable (x) accumulates like a drift-diffusion model until it reaches an absolute summed threshold (10)
+
+```{r}
+
+deets = c()
+set.seed(666)
+for (i in 1:100) { # 100 trials of the run
+  x_trial = c()
+  x = 0
+  k = runif(1)-.5
+  x_sum = 0
+  for (j in 1:1000) { # run a while until it hits threshold (almost always much shorter of course)
+    x_trial = rbind(x_trial,data.frame(k=k,x=x,x_sum=x_sum))
+    x = x + (-k + x - x^3) # update state variable
+    x_sum = x_sum + x
+    
+    if (abs(x_sum)>20) { 
+      if (i==1) { # if it's the first run, let's show an example run
+        plot(x_trial$x_sum,(1:j)/j,type='l',xlim=c(-21,21),xlab='Cumulative x',ylab='Iteration (max scaled)')
+      } else { # otherwise, we add to it
+        points(x_trial$x_sum,(1:j)/j,type='l')
+      }
+      break; # we reached threshold, next trial
+    }
+    
+  }
+  deets = rbind(deets,x_trial)
+}
+
+sindy.obj = sindy(xs=deets[1:(nrow(deets)-1),1:2],dx=as.matrix(deets[2:nrow(deets),1:2]),lambda=.7,plot.eq.graph=T);
+print(sindy.obj$B)
+
+```
+
+
+
+
+

@@ -56,7 +56,7 @@ int.terms = c()
 int.terms.vals = c()
 for (connection in connections) {
   # set seed so that the graph can be reproduced exactly
-  xs = coupled_logistic(seed=666,connection=connection,iterations_per_a=100) # general coupled map data (a, x, y)
+  xs = coupled_logistic(seed=666,connection=connection,iterations_per_a=10) # general coupled map data (a, x, y)
   dx = as.matrix(xs[2:(nrow(xs)),]) # derivative in discrete updated systems is just x_{t+1}
   xs = xs[1:(nrow(xs)-1),] # align original data
   if (connection %in% c(0,1)) { print(paste0('Connectivity level: ',connection)) }
