@@ -12,6 +12,6 @@ Description:
     equations for a measured system from raw data (SINDy). The library
     includes a set of additional tools for working with raw
     data, with an emphasis on cognitive science applications.
-Depends: R (>= 3.0.0), pracma
+Depends: R (>= 3.4), pracma
 License: GPL (>= 2)
 NeedsCompilation: no
