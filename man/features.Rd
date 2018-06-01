@@ -20,7 +20,7 @@
 \value{Returns a new matrix of data with features from raw data
 }
 
-\author{Rick Dale (racdale@gmail.com)}
+\author{Rick Dale and Harish Bhat}
 
 
 \examples{

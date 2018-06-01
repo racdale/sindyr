@@ -36,7 +36,7 @@ License: \tab GPL >= 2\cr
 
 }
 
-\author{Rick Dale (racdale@gmail.com) and Harish Bhat}
+\author{Rick Dale and Harish Bhat}
 
 \references{
   

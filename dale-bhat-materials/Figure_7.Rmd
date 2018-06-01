@@ -1,6 +1,6 @@
 ---
 title: 'Figure 7: Coupled Logistic Maps'
-author: "Rick Dale"
+author: "Rick Dale and Harish Bhat"
 date: "5/31/2018"
 output: html_document
 ---
