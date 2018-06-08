@@ -21,7 +21,7 @@
 \value{Returns first-order numerical derivatives estimated from data.
 }
 
-\author{Rick Dale and Harish Bhat}
+\author{Rick Dale and Harish S. Bhat}
 
 
 \examples{
