@@ -18,6 +18,7 @@ Under "dale-bhat-materials," we show several example uses of `sindyr`, based on 
 ### Notes
 
 sindyr works with R >= 3.4
+
 sindyr depends on the following packages: arrangements, matrixStats, and igraph.
 
 ### References:
