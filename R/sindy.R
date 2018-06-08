@@ -89,8 +89,8 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
     plot(0, type="n", ann=FALSE, axes=FALSE, xlim=extendrange(co[,1]), 
          ylim=extendrange(co[,2]))
     plot(g,rescale=F,add=T,
-         edge.arrow.size=eq.graph.par$edge.arrow.size,
-         vertex.label.cex=eq.graph.par$vertex.label.cex,
+         edge.arrow.size=1,
+         vertex.label.cex=1.5,
          layout=co,
          vertex.shape="rectangle",
          vertex.size=(strwidth(V(g)$label) + strwidth("oo")) * 100,
