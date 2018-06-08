@@ -1,5 +1,5 @@
 ---
-title: 'Figure 7: Coupled Logistic Maps'
+title: 'Demo 5: Coupled Logistic Maps'
 author: "Rick Dale and Harish S. Bhat"
 date: "5/31/2018"
 output: html_document
