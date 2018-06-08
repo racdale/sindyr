@@ -1,5 +1,5 @@
 ---
-title: 'Figure 5: Reconstruction the Two-Well Attractor of Tuller et al. (1994)'
+title: 'Demo 3: Reconstruction the Two-Well Attractor of Tuller et al. (1994)'
 author: "Rick Dale and Harish S. Bhat"
 date: "5/31/2018"
 output: html_document
