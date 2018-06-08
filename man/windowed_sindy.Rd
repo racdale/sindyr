@@ -28,7 +28,7 @@
 \value{It returns a list of coefficients Bs containing B coefficients at each window
 }
 
-\author{Rick Dale and Harish Bhat}
+\author{Rick Dale and Harish S. Bhat}
 
 
 \examples{

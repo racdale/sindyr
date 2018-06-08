@@ -24,7 +24,7 @@
 \value{Returns a matrix B of coefficients specifying the relationship between dx and Theta
 }
 
-\author{Rick Dale and Harish Bhat}
+\author{Rick Dale and Harish S. Bhat}
 
 
 \examples{
