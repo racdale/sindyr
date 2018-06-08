@@ -36,11 +36,11 @@ License: \tab GPL >= 2\cr
 
 }
 
-\author{Rick Dale and Harish Bhat}
+\author{Rick Dale and Harish S. Bhat}
 
 \references{
   
-  Dale, R. and Bhat, H. Equations of mind: data science for inferring
+  Dale, R. and Bhat, H. S. Equations of mind: data science for inferring
   differential equations.    
   
   Brunton, S. L., Proctor, J. L., and Kutz, J. N. (2016). Discovering governing equations from data by sparse identification of nonlinear dynamical systems. Proceedings of the National Academy of Sciences, 113(15), 3932-3937.  
