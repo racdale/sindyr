@@ -1,6 +1,6 @@
 ---
 title: 'Demo 1: Reconstructing the Logistic Map'
-author: "Rick Dale and Harish Bhat"
+author: "Rick Dale and Harish S. Bhat"
 date: "5/31/2018"
 output: html_document
 ---
