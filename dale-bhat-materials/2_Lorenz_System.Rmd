@@ -49,6 +49,25 @@ sindy.obj$B
 
 ```
 
+Let's initialize the parameters, the first system state, then simulated using our reconstructed B.
+
+```{r}
+
+#
+# let's model under particular values
+#
+par(mfrow=c(1,2))
+x.now = xs[1,]
+xs_modeled = xs[1,]
+for (i in 1:10000) {
+  x.now = x.now + (10^(-3))*features(x.now,3) %*% sindy.obj$B
+  xs_modeled = rbind(xs_modeled,x.now)
+}
+
+points3D(xs_modeled$x,xs_modeled$y,xs_modeled$z,type='l',col='black')
+
+```
+
 
 
 
