@@ -7,7 +7,7 @@ If you use the code, toss us a shout out by citing:
 
 > Dale, R. & Bhat, H. S. (submitted). Equations of mind: Data science for inferring ODEs for socio-cognitive systems.
 
-Under "dale-bhat-materials," we show several example uses of `sindyr`, based on the manuscript cited above. For a quick start, consider perusing the reconstruction of the Lorenz attractor's equations using `sindyr` [here](https://htmlpreview.github.com/?https://github.com/racdale/sindyr/blob/master/dale-bhat-materials/Figure_3.html). 
+Under "dale-bhat-materials," we show several example uses of `sindyr`, based on the manuscript cited above. For a quick start, consider perusing the reconstruction of the Lorenz attractor's equations using `sindyr` [here](https://htmlpreview.github.com/?https://github.com/racdale/sindyr/blob/master/dale-bhat-materials/2_Lorenz_System.html). 
 
 ### Installation
 
