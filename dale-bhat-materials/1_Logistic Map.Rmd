@@ -18,10 +18,9 @@ set.seed(666)
 
 as = seq(from=2.1,to=3.99,by=.05) # the range of parameters used
 xs = c()
-x = runif(1)
+x = .01
 for (a in as) {
   xs_temp = c()
-  x = runif(1)
   for (i in 1:200) { # iterations per control parameter value
     x = a*x*(1-x)
     xs_temp = rbind(xs_temp,data.frame(a=a,x=x))
@@ -39,35 +38,26 @@ sindy.obj$B # the fit
 
 For illustration of the system, we display the system values over the control parameter (`a`), along with the set of features used to reconstruct the logistic map with SINDy.
 
-```{r}
+```{r,fig.height=3}
 
 # 
 # let's get some plots
 #
 par(mfrow=c(1,2))
-plot(xs[xs$a==2.2,2],type='b',xlab='Iteration (t)',ylab='x',main='a = 2.2') # under values a=2.2
-plot(xs[xs$a==3.95,2],type='b',xlab='Iteration (t)',ylab='x',main='a = 3.95') # under values a=3.95
-par(mfrow=c(1,3))
-plot(xs[,1],type='p',cex=.5,pch=15,xlab='t',ylab='a') # a
-plot(xs[,2],type='p',cex=.5,pch=15,xlab='t',ylab='x') # x
-plot(dx,type='p',cex=.5,pch=15,xlab='t',ylab='dx') # dx
-Theta = features(xs,3) # grid of features
-par(mfrow=c(3,3),oma = c(2,0,0,0) + 0.1,mar = c(1,1,1,1) + 0.1)
-for (i in 2:ncol(Theta)) {
-  plot(Theta[,i],xlab='t',main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
-}
+plot(xs[xs$a==2.1,2],type='l',xlab='t (iteration)',ylab='x',main='a = 2.1',ylim=c(0,1),col='maroon',lwd=2) # under values a=2.2
+plot(xs[xs$a==3.95,2],type='l',xlab='t (iteration)',ylab='x',main='a = 3.95',ylim=c(0,1),col='navy',lwd=2) # under values a=3.95
 
 #
 # let's model the logistic under particular values
 #
 par(mfrow=c(1,2))
-x.now = xs[xs$a==2.2,][1,]
-xs_modeled = xs[xs$a==2.2,][1,]
+x.now = xs[xs$a==2.1,][1,]
+xs_modeled = xs[xs$a==2.1,][1,]
 for (i in 1:200) {
   x.now = features(x.now,3) %*% sindy.obj$B
   xs_modeled = rbind(xs_modeled,x.now)
 }
-plot(xs_modeled[,2],type='b',xlab='Iteration (t)',ylab='x',main='a = 2.2') # under values a=2.2
+plot(xs_modeled[,2],type='l',xlab='t (iteration)',ylab='x',main='a = 2.1',ylim=c(0,1),col='maroon',lwd=2) # under values a=2.2
 
 x.now = xs[xs$a==3.95,][1,]
 xs_modeled = xs[xs$a==3.95,][1,]
@@ -75,8 +65,29 @@ for (i in 1:200) {
   x.now = features(x.now,3) %*% sindy.obj$B
   xs_modeled = rbind(xs_modeled,x.now)
 }
-plot(xs_modeled[,2],type='b',xlab='Iteration (t)',ylab='x',main='a = 3.95') # under values a=3.95
+plot(xs_modeled[,2],type='l',xlab='t (iteration)',ylab='x',main='a = 3.95',ylim=c(0,1),col='navy',lwd=2) # under values a=3.95
+```
 
+Here are the data for X and the dx derivation for the discrete update.
+
+```{r,fig.height=5}
+par(mfrow=c(1,2))
+plot(xs[,1],type='l',cex=.5,pch=15,xlab='t (iteration)',ylab='a') # a
+plot(xs[,2],type='p',cex=.25,pch=15,xlab='t (iteration)',ylab='x') # x
+par(mfrow=c(1,2))
+plot(dx[,1],type='l',cex=.5,pch=15,xlab='t (iteration)',ylab='a',cex.lab=2) # dx
+plot(dx[,2],type='l',cex=.5,pch=15,xlab='t (iteration)',ylab='dx',cex.lab=2) # dx
+
+```
+
+The features used to reconstruct
+
+```{r,fig.height=6,fig.width=7}
+Theta = features(xs,3) # grid of features
+par(mfrow=c(3,3),oma = c(2,0,0,0) + 0.1,mar = c(1,1,1,1) + 0.5)
+for (i in 2:ncol(Theta)) {
+  plot(Theta[,i],xlab='t (iteration)',cex.main=2,main=gsub(':','',colnames(Theta)[i]),type='l',xaxt='n',yaxt='n')
+}
 ```
 
 

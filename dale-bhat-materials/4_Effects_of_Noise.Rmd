@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Taking the simulation of two-attractor well decision making described in Figure 5 and in Dale and Bhat, we inject noise and demonstrate that SINDy becomes highly unstable. 
 
-```{r message=FALSE,warning=FALSE}
+```{r message=FALSE,warning=FALSE,fig.width=4}
 
 library(sindyr)
 
@@ -65,7 +65,7 @@ plot(rmses$noise,rmses$rmse,type='b',xlab='Noise',ylab='RMSE')
 
 SINDy can be used as a *relative* estimation of model complexity though, and here, despite noise, it can work quite well. Belowe implement two versions of this attractor-well model. Both contain the same level of noise, but one is more complex -- invoking a second term (x^2) in the update equation. The complexity of recovered equations strongly echoes the underlying complexity of the generating system. This suggests that SINDy may be used for *relative* measures of system complexity, not just absolute interpretations from exact recovery.
 
-```{r}
+```{r,fig.width=4}
 
 complexities = c()
 noise = .2 # set a high noise level, judging from the above simulation

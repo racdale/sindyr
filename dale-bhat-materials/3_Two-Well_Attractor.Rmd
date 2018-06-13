@@ -23,7 +23,7 @@ plot(x,V,xlab='x',type='l',lwd=2)
 
 Now let's run the attractor model over this potential, collecting 100 trials. In each trial, the system variable (x) accumulates like a drift-diffusion model until it reaches an absolute summed threshold (10)
 
-```{r}
+```{r,fig.width=5}
 
 deets = c()
 set.seed(666)
