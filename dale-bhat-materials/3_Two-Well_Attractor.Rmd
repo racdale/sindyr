@@ -26,6 +26,7 @@ Now let's run the attractor model over this potential, collecting 100 trials. In
 ```{r,fig.width=5}
 
 deets = c()
+noise = 0.01
 set.seed(666)
 for (i in 1:100) { # 100 trials of the run
   x_trial = c()
@@ -34,7 +35,7 @@ for (i in 1:100) { # 100 trials of the run
   x_sum = 0
   for (j in 1:1000) { # run a while until it hits threshold (almost always much shorter of course)
     x_trial = rbind(x_trial,data.frame(k=k,x=x,x_sum=x_sum))
-    x = x + (-k + x - x^3) # update state variable
+    x = x + (-k + x - x^3) + noise*(rnorm(1)) # update state variable
     x_sum = x_sum + x
     
     if (abs(x_sum)>20) { 
@@ -49,8 +50,10 @@ for (i in 1:100) { # 100 trials of the run
   }
   deets = rbind(deets,x_trial)
 }
-
-sindy.obj = sindy(xs=deets[1:(nrow(deets)-1),1:2],dx=as.matrix(deets[2:nrow(deets),1:2]),lambda=.7,plot.eq.graph=T);
+xs=deets[1:(nrow(deets)-1),1:2]
+dx=as.matrix(deets[2:nrow(deets),1:2])
+non.zeros = dx[,2]!=0&xs[,2]!=0
+sindy.obj = sindy(xs=xs[non.zeros,1:2],dx=dx[non.zeros,1:2],lambda=.7,plot.eq.graph=T);
 print(sindy.obj$B)
 
 ```
