@@ -9,6 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+From:
+
+> Dale, R. & Bhat, H. S. (in press). Equations of mind: Data science for inferring nonlinear dynamics of socio-cognitive systems. *Cognitive Systems Research*.
+
 This code models coupled logistic maps using the function `coupled_logistic` and demonstrates how `sindyr` can be used to plot a graph illustrating the relationship among terms of a recovered set of orderinary differential equations. This demonstration in the Dale and Bhat paper illustrates the use of SINDy for exploring coupled systems, such as in a social dynamic context.
 
 ```{r message=FALSE,warning=FALSE}

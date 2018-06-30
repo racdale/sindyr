@@ -40,8 +40,8 @@ License: \tab GPL >= 2\cr
 
 \references{
   
-  Dale, R. and Bhat, H. S. Equations of mind: data science for inferring
-  differential equations.    
+  Dale, R. and Bhat, H. S. (in press). Equations of mind: data science for inferring
+  differential equations. Cognitive Systems Research.
   
   Brunton, S. L., Proctor, J. L., and Kutz, J. N. (2016). Discovering governing equations from data by sparse identification of nonlinear dynamical systems. Proceedings of the National Academy of Sciences, 113(15), 3932-3937.  
     

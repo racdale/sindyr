@@ -9,6 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+From:
+
+> Dale, R. & Bhat, H. S. (in press). Equations of mind: Data science for inferring nonlinear dynamics of socio-cognitive systems. *Cognitive Systems Research*.
+
 Here we use SINDy to reconstruct the two-well attractor model described in Tuller et al. (1994) and Duran and Dale (2012). First, here's the potential of this system, V, over which the system variable fluctuates:
 
 ```{r message=FALSE,warning=FALSE}

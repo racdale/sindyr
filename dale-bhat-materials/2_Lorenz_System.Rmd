@@ -9,6 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+From:
+
+> Dale, R. & Bhat, H. S. (in press). Equations of mind: Data science for inferring nonlinear dynamics of socio-cognitive systems. *Cognitive Systems Research*.
+
 This brief code obtains a simulation of the Lorenz system using the resources in the `crqa` library (Coco and Dale, 2014). For illustration, we plot the system, variables, and the features that are used in SINDy. The code then runs the `sindyr` function to recover the system of equations.
 
 ```{r message=FALSE,warning=FALSE}
