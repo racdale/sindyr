@@ -12,7 +12,7 @@ Description:
     equations for a measured system from raw data (SINDy). The library
     includes a set of additional tools for working with raw
     data, with an emphasis on cognitive science applications.
-Depends: R (>= 3.4), pracma, arrangements, matrixStats, and igraph
+Depends: R (>= 3.4), pracma, arrangements, matrixStats, igraph
 License: GPL (>= 2)
 Collate: 'windowed_sindy.R' 'sindy.R' 'features.R' 'finite_differences.R' 'finite_difference.R'
 NeedsCompilation: no
