@@ -12,6 +12,7 @@
 \arguments{
   \item{x}{Raw data to be converted into features}
   \item{polyorder}{Order of polynomials (including k-th self products)} 
+  \item{intercept}{Include column of 1s in features to represent intercept (default = TRUE)}
 }
 \details{
  Expands raw data into a set of polynomial features.

@@ -3,7 +3,7 @@ Type: Package
 Title: Tools for Sparse Identification of Nonlinear
            Dynamics for R
 Version: 0.002
-Date: 2018-06-29
+Date: 2018-07-04
 Author: Rick Dale and Harish S. Bhat
 Maintainer: Rick Dale <racdale@gmail.com>
 Description: 
@@ -11,7 +11,7 @@ Description:
     identification algorithm for finding ordinary differential
     equations for a measured system from raw data (SINDy). The library
     includes a set of additional tools for working with raw
-    data, with an emphasis on cognitive science applications.
+    data, with an emphasis on cognitive science applications (Dale and Bhat, in press).
 Depends: R (>= 3.4), pracma, arrangements, matrixStats, igraph
 License: GPL (>= 2)
 Collate: 'windowed_sindy.R' 'sindy.R' 'features.R' 'finite_differences.R' 'finite_difference.R'

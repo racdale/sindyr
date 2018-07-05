@@ -2,7 +2,7 @@
 \alias{finite_differences}
 \title{Estimate derivatives of multiple variables with finite differences}
 \description{
-  Estimates first-order derivatives of a column vectors of matrix }
+  Estimates first-order derivatives of column vectors of a matrix }
 
 \usage{
 

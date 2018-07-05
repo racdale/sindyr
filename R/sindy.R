@@ -4,9 +4,10 @@
 #' @param dx matrix of main system variable dervatives; if NULL, sindy estimates with finite differences from xs
 #' @param Theta matrix of features; if not supplied, assumes polynomial features of order 3
 #' @param lambda threshold to use for iterated least squares sparsification (Brunton et al.)
-#' @param B.expected matrix of expected coefficients to compute error
-#' @param verbose verbose mode outputs considerably more data to the SINDy object... (S3, see below)
-#' @param plot.eq.graph plot an igraph network of the terms based on coefficients of SINDy model (T/F)
+#' @param B.expected the function will compute a goodness of fit if supplied with an expected coefficient matrix B; default = NULL
+#' @param verbose verbose mode outputs Theta and dx values to the SINDy object... (S3, see below); default FALSE
+#' @param fit.its number of iterations to conduct the least-square threshold sparsification; default = 10
+#' @param plot.eq.graph plot an igraph network of the terms based on coefficients of SINDy model (default: FALSE)
 #' @return a sindy object (S3 class) with coefficients (B), original data, some metrics, and so on; e.g., sindy$B
 
 .packageName <- 'sindyr'
