@@ -27,12 +27,23 @@ License: \tab GPL >= 2\cr
 
 \code{sindy}: Main function to infer coefficient matrix for set of ODEs.
 
+<<<<<<< HEAD
 \code{windowed_sindy}: Sliding window function to obtain SINDy results across segments of a time series.
 
 \code{features}: Function for generation feature space from measured variables.
 
 \code{finite_differences}: Numerical differentiation over multiple columns.
 
+=======
+\code{sindy}: Main function to infer coefficient matrix for set of ODEs.
+
+\code{windowed_sindy}: Sliding window function to obtain SINDy results across segments of a time series.
+
+\code{features}: Function for generation feature space from measured variables.
+
+\code{finite_differences}: Numerical differentiation over multiple columns.
+
+>>>>>>> 36b5c64ffa301343e4a4bc0ae3155ccdd6be1bee
 \code{finite_difference}: Numerical differential of a vector.
 
 }
