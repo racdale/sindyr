@@ -23,7 +23,7 @@ Version: \tab 0.002\cr
 Date: \tab 2018-07-04\cr
 License: \tab GPL >= 2\cr
 }
-
+ 
 
 \code{sindy}: Main function to infer coefficient matrix for set of ODEs.
 
