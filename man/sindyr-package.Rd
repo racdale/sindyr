@@ -4,22 +4,21 @@
 \docType{package}
 
 \title{
-  Tools for Sparse Identification of Nonlinear Dynamics for R
+  Sparse Identification of Nonlinear Dynamics
 }
 
 \description{
-  This implements the Brunton et al (2016; PNAS) sparse
-    identification algorithm for finding ordinary differential
-    equations (ODEs) for a measured system from raw data (SINDy). The library
-    includes a set of additional tools for working with raw
-    data, with an emphasis on cognitive science applications 
-    (Dale and Bhat, in press).
+    This implements the Brunton et al (2016; PNAS, doi: 10.1073/pnas.1517384113) sparse
+    identification algorithm for finding ordinary differential equations for a measured 
+    system from raw data (SINDy). The package includes a set of additional tools for 
+    working with raw data, with an emphasis on cognitive science applications (Dale 
+    and Bhat, in press, doi: 10.1016/j.cogsys.2018.06.020).
 }
 \details{
 \tabular{ll}{
 Package: \tab sindyr\cr
 Type: \tab Package\cr
-Version: \tab 0.002\cr
+Version: \tab 0.2\cr
 Date: \tab 2018-07-04\cr
 License: \tab GPL >= 2\cr
 }
