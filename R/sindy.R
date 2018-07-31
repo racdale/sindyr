@@ -13,8 +13,8 @@
 .packageName <- 'sindyr'
 
 sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
-                 B.expected=NULL,verbose=F,fit.its=10,
-                 plot.eq.graph=F) {
+                 B.expected=NULL,verbose=FALSE,fit.its=10,
+                 plot.eq.graph=FALSE) {
   
   if (is.null(dx)) { # if dx not supplied, let's estimate it
     dx = xs*0 # initialize to 0

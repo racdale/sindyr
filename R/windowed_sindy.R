@@ -17,14 +17,16 @@ windowed_sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05,fit.its=10,B.exp
                           window.size=round(nrow(xs)/10),window.shift=round(nrow(xs)/10)) {
   j = 1
   windowed.results = c()
-  for (i in seq(from=1,to=nrow(xs)-window.size+1,by=window.shift)) {
+  ixes = seq(from=1,to=nrow(xs)-window.size+1,by=window.shift)
+  for (i in ixes) {
+    print(paste0('Running window ',which(i==ixes),' of ',length(ixes)))
     sub.xs = xs[i:(i+window.size-1),]
     if (!is.null(dx)) {
-      sub.dx = dx[i:(i+window.size-1),]
+      sub.dx = as.matrix(dx[i:(i+window.size-1),])
     } else {
       sub.dx = NULL
     }    
-    sindy.obj = sindy(sub.xs,dx=as.matrix(sub.dx),dt=dt,Theta=Theta,lambda=lambda,B.expected=B.expected,verbose=F,fit.its=fit.its,plot.eq.graph=F)
+    sindy.obj = sindy(sub.xs,dx=sub.dx,dt=dt,Theta=Theta,lambda=lambda,B.expected=B.expected,verbose=F,fit.its=fit.its,plot.eq.graph=F)
     j = j + 1
     windowed.results = rbind(windowed.results,data.frame(t=i,window=j,window.size=window.size,
                                                          B.err=ifelse(is.null(sindy.obj$B.err),NA,sindy.obj$B.err),

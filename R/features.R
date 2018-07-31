@@ -7,7 +7,7 @@
 
 .packageName <- 'sindyr'
 
-features = function(x,polyorder=2,intercept=T) {
+features = function(x,polyorder=2,intercept=TRUE) {
   nc = ncol(x)
   x = cbind(x,1)
   colnames(x) = c(colnames(x)[1:nc],"(Intercept)")
