@@ -4,6 +4,4 @@ export(finite_difference,
        windowed_sindy, 
        features)
 
-import(pracma,arrangements,matrixStats,igraph)
-
-importFrom("graphics", "plot")
+import(pracma,arrangements,matrixStats,igraph,graphics,grDevices,crqa)

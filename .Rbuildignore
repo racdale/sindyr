@@ -1,0 +1,8 @@
+^.git$
+^.DS_Store$
+^.gitattributes$
+^.gitignore$
+^.Rhistory$
+^dale-bhat-materials$
+^README.md$
+^sindyr.Rproj$

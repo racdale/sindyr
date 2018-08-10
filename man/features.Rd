@@ -5,9 +5,6 @@
   Takes a raw matrix of data and converts into polynomial features
   }
 
-\usage{
-
-}
 
 \arguments{
   \item{x}{Raw data to be converted into features}
@@ -23,9 +20,5 @@
 
 \author{Rick Dale and Harish S. Bhat}
 
-
-\examples{
-
-}
 
 \keyword{misc}

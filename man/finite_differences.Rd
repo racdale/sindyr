@@ -4,10 +4,6 @@
 \description{
   Estimates first-order derivatives of column vectors of a matrix }
 
-\usage{
-
-}
-
 \arguments{
   \item{xs}{Raw data to be differentiated (matrix)}
   \item{S}{Sample rate of data to return derivatives using raw time}
@@ -23,9 +19,5 @@
 
 \author{Rick Dale and Harish S. Bhat}
 
-
-\examples{
- 
-}
 
 \keyword{misc}

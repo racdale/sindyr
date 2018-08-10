@@ -7,10 +7,6 @@
   governing system variables.
   }
 
-\usage{
-
-}
-
 \arguments{
   \item{xs}{Matrix of raw data}
   \item{dx}{Matrix of main system variable dervatives; if NULL, it estimates with finite differences from xs}
@@ -40,9 +36,5 @@
   
 }
 
-
-\examples{
-
-}
 
 \keyword{misc}

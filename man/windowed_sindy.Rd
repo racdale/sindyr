@@ -5,10 +5,6 @@
   Run SINDy on raw data with a sliding window approach
 }
 
-\usage{
-
-}
-
 \arguments{
   \item{xs}{Matrix of raw data}
   \item{dx}{Matrix of main system variable dervatives; if NULL, it estimates with finite differences from xs}
@@ -37,9 +33,6 @@
   Dale, R. and Bhat, H. S. (in press). Equations of mind: data science for inferring
   nonlinear dynamics of socio-cognitive systems. Cognitive Systems Research.
   
-}
-
-\examples{
 }
 
 \keyword{misc}

@@ -19,21 +19,19 @@
 Package: \tab sindyr\cr
 Type: \tab Package\cr
 Version: \tab 0.2\cr
-Date: \tab 2018-07-04\cr
+Date: \tab 2018-08-10\cr
 License: \tab GPL >= 2\cr
 }
  
 
 \code{sindy}: Main function to infer coefficient matrix for set of ODEs.
 
-<<<<<<< HEAD
 \code{windowed_sindy}: Sliding window function to obtain SINDy results across segments of a time series.
 
 \code{features}: Function for generation feature space from measured variables.
 
 \code{finite_differences}: Numerical differentiation over multiple columns.
 
-=======
 \code{sindy}: Main function to infer coefficient matrix for set of ODEs.
 
 \code{windowed_sindy}: Sliding window function to obtain SINDy results across segments of a time series.
@@ -42,7 +40,6 @@ License: \tab GPL >= 2\cr
 
 \code{finite_differences}: Numerical differentiation over multiple columns.
 
->>>>>>> 36b5c64ffa301343e4a4bc0ae3155ccdd6be1bee
 \code{finite_difference}: Numerical differential of a vector.
 
 }
@@ -55,6 +52,8 @@ License: \tab GPL >= 2\cr
   nonlinear dynamics of socio-cognitive systems. Cognitive Systems Research.
   
   Brunton, S. L., Proctor, J. L., and Kutz, J. N. (2016). Discovering governing equations from data by sparse identification of nonlinear dynamical systems. Proceedings of the National Academy of Sciences, 113(15), 3932-3937.  
+
+  For further examples and links to other materials see: https://github.com/racdale/sindyr
     
 }
 
@@ -66,7 +65,6 @@ License: \tab GPL >= 2\cr
 # the Lorenz system
 
 library(sindyr)
-library(crqa) # for Lorenz
 
 set.seed(666)
 dt = .001
