@@ -68,7 +68,7 @@ library(sindyr)
 
 set.seed(666)
 dt = .001
-numsteps = 50000; dt = dt; sigma = 10; r = 28; b = 2.6;
+numsteps = 10000; dt = dt; sigma = 10; r = 28; b = 2.6;
 xs = data.frame(lorenzattractor(numsteps, dt, sigma, r, b, plots=FALSE))
 colnames(xs) = list('x','y','z')
 xs = xs[2000:nrow(xs),] # cut out initialization
