@@ -52,7 +52,7 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
   } else { B.err = NULL }
   
   p_dx = Theta %*% B # prediction error
-  pred.err = sqrt(mean(p_dx[,2]-dx[,2])^2)
+  pred.err = sqrt(mean(p_dx-dx)^2)
   
   simple.kolmog = sum(B!=0)
   prop.coef = sum(B!=0)/length(B)

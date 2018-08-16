@@ -17,7 +17,7 @@ Taking the simulation of two-attractor well decision making described in Dale an
 
 ```{r message=FALSE,warning=FALSE,fig.width=4}
 
-library(sindyr)
+#library(sindyr)
 
 logistic_sindy = function(trials=100,noise=0,more.complex=F) {
   # for GOF tests, here's a desired fit from the Tuller et al. model (Duran & Dale)
