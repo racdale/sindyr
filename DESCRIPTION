@@ -1,8 +1,8 @@
 Package: sindyr
 Type: Package
 Title: Sparse Identification of Nonlinear Dynamics
-Version: 0.2
-Date: 2018-08-10
+Version: 0.2.1
+Date: 2018-09-10
 Author: Rick Dale and Harish S. Bhat
 Maintainer: Rick Dale <racdale@gmail.com>
 Description: 
