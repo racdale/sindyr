@@ -11,6 +11,12 @@ Under "dale-bhat-materials," we show several example uses of `sindyr`, based on 
 
 ### Installation
 
+`sindyr` is now available on [CRAN](https://cran.r-project.org/web/packages/sindyr/index.html):
+
+`install.packages('sindyr')`
+
+On occasion this version on GitHub will go out of alignment before we do a CRAN update. If this happens you can install from the repository this way:
+
 `install.packages('devtools')`
 
 `devtools::install_github('racdale/sindyr')`
