@@ -28,7 +28,7 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
     Theta = features(xs,polyorder=3) # if Theta not specified, make it (assume order 3)
   }
   
-  B = mldivide(Theta,dx) # now, the party startsy; let's do left division
+  B = mldivide(Theta,dx) # now, the party starts; let's do left division
   if (lambda>0) { # if lambda is zero, then all our coefficients stay, otherwise...
     for (k in 1:fit.its) { # ...cycle 10 (fit.its) times and refit
       zero_inds = which(abs(B)<lambda); # find which should be zero
@@ -52,7 +52,8 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
   } else { B.err = NULL }
   
   p_dx = Theta %*% B # prediction error
-  pred.err = sqrt(mean(p_dx-dx)^2)
+  pred.err = (p_dx-dx)^2 # squared error
+  pred.err = sqrt(mean(pred.err)) # root mean squared error
   
   simple.kolmog = sum(B!=0)
   prop.coef = sum(B!=0)/length(B)
@@ -98,6 +99,6 @@ sindy = function(xs,dx=NULL,dt=1,Theta=NULL,lambda=.05, # main parameters
          vertex.size2=strheight("I")*2*100,asp=0)
   }  
   
-  return(sindy.obj) # put it in the mailbox
+  return(sindy.obj) 
 }
 
