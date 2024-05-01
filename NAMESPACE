@@ -2,6 +2,9 @@ export(finite_difference,
        finite_differences, 
        sindy, 
        windowed_sindy, 
-       features)
+       features,
+       lorenzattractor)
 
-import(pracma,arrangements,matrixStats,igraph,graphics,grDevices,crqa)
+import(arrangements,matrixStats,igraph,graphics,grDevices)
+
+importFrom(pracma, mldivide)
